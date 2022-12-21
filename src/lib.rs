@@ -20,7 +20,12 @@ pub mod color_and_prof;
 /// Denotes the absolute side: `ASide` vs. `IASide` / 絶対座標での陣営 (`ASide` vs. `IASide`) を表す。
 pub mod absolute_side;
 
+/// Describes a move.
+/// ／指した手を表す。
+pub mod pure_move;
+
 pub use color::*;
 pub use color_and_prof::*;
 pub use profession::*;
 pub use absolute_side::*;
+pub use pure_move::*;
