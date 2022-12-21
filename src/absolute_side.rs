@@ -4,7 +4,7 @@ use std::{ops, str::FromStr};
 /// Describes which player it is
 /// ／どちら側のプレイヤーであるかを指定する。
 #[derive(Eq, PartialEq, Clone, Copy, Debug, Hash, Deserialize, Serialize)]
-pub enum Side {
+pub enum AbsoluteSide {
     /// The player whose pieces lie in the A, E and I row when the game starts.
     /// ／A側プレイヤー。初期状態でA, E, Iの三列に渡って自分の駒が配置されている。
     ASide,
@@ -14,24 +14,24 @@ pub enum Side {
     IASide,
 }
 
-impl FromStr for Side {
+impl FromStr for AbsoluteSide {
     type Err = ();
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
-            "A" => Ok(Side::ASide),
-            "IA" => Ok(Side::IASide),
+            "A" => Ok(AbsoluteSide::ASide),
+            "IA" => Ok(AbsoluteSide::IASide),
             _ => Err(()),
         }
     }
 }
 
-impl ops::Not for Side {
-    type Output = Side;
+impl ops::Not for AbsoluteSide {
+    type Output = AbsoluteSide;
 
     fn not(self) -> Self::Output {
         match self {
-            Side::ASide => Side::IASide,
-            Side::IASide => Side::ASide,
+            AbsoluteSide::ASide => AbsoluteSide::IASide,
+            AbsoluteSide::IASide => AbsoluteSide::ASide,
         }
     }
 }
