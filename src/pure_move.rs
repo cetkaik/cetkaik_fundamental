@@ -1,6 +1,5 @@
 use crate::{Color, Profession};
 
-
 /// Describes a move.
 /// ／指した手を表す。
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
@@ -83,4 +82,78 @@ pub enum PureMove_<Coord> {
         /// second destination／二回目の終了点
         second_dest: Coord,
     },
+}
+
+impl<Coord: std::fmt::Display> std::fmt::Display for PureMove_<Coord> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PureMove_::InfAfterStep {
+                src,
+                step,
+                planned_direction,
+            } => write!(f, "{src}片{step}心{planned_direction}"),
+            PureMove_::NonTamMoveFromHopZuo { color, prof, dest } => write!(
+                f,
+                "{}{}{}",
+                crate::serialize_color(*color),
+                crate::serialize_prof(*prof),
+                (dest)
+            ),
+            PureMove_::NonTamMoveSrcDst {
+                src,
+                dest,
+                is_water_entry_ciurl,
+            } => write!(
+                f,
+                "{}片{}{}",
+                (src),
+                (dest),
+                if *is_water_entry_ciurl { "水" } else { "" }
+            ),
+            PureMove_::NonTamMoveSrcStepDstFinite {
+                src,
+                dest,
+                is_water_entry_ciurl,
+                step,
+            } => write!(
+                f,
+                "{}片{}{}{}",
+                (src),
+                (step),
+                (dest),
+                if *is_water_entry_ciurl { "水" } else { "" }
+            ),
+            PureMove_::TamMoveNoStep {
+                src,
+                first_dest,
+                second_dest,
+            } => write!(f, "{src}皇[{first_dest}]{second_dest}"),
+            PureMove_::TamMoveStepsDuringFormer {
+                src,
+                first_dest,
+                second_dest,
+                step,
+            } => write!(
+                f,
+                "{}皇{}[{}]{}",
+                (src),
+                (step),
+                (first_dest),
+                (second_dest)
+            ),
+            PureMove_::TamMoveStepsDuringLatter {
+                src,
+                first_dest,
+                second_dest,
+                step,
+            } => write!(
+                f,
+                "{}皇[{}]{}{}",
+                (src),
+                (first_dest),
+                (step),
+                (second_dest)
+            ),
+        }
+    }
 }
